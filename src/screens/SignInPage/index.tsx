@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { signIn } from '../../redux/slices/authSlice';
+import { ROUTES } from '../../utils/constants';
 
 function SignInPage() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   
   const [email, setEmail] = useState<string>('');
@@ -28,6 +31,13 @@ function SignInPage() {
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <input type="submit" value="Sign In" />
       </form>
+      <h3>Don't have an accout? 
+        <button 
+          className='button'
+          onClick={() => navigate(ROUTES.SIGNUP)}>
+            Sign Up
+        </button>
+      </h3>
     </div>
   );
 }

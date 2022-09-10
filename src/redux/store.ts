@@ -1,15 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import connectionReducer from './slices/connectionSlice';
 import authReducer from './slices/authSlice';
-import resourcesReducer from './slices/resourcesSlice';
-import usersReducer from './slices/usersSlice';
+import followingReducer from './slices/followingsSlice';
+import dartReducer from './slices/dartSlice';
 
 export const store = configureStore({
   reducer: {
     connection: connectionReducer,
     auth: authReducer,
-    resources: resourcesReducer,
-    users: usersReducer,
+    following: followingReducer,
+    dart: dartReducer,
   },
 });
 

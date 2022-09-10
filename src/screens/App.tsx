@@ -13,8 +13,6 @@ import ErrorPage from './ErrorPage';
 import ForbiddenPage from './ForbiddenPage';
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
-import UsersPage from './UsersPage';
-import ResourcesPage from './ResourcesPage';
 import VerifyPage from './VerifyPage';
 
 interface ProtectedRouteProps {
@@ -25,7 +23,10 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ allowableScopes, children }: ProtectedRouteProps) => {
   const { authenticated, role } = useAppSelector((state) => state.auth);
 
-  if (!allowableScopes.includes(role) || !authenticated) {
+  if (!authenticated) {
+    return <SignInPage />
+  }
+  else if (!allowableScopes.includes(role)) {
     return <ForbiddenPage />
   }
   
@@ -49,29 +50,18 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path={ROUTES.HOME} element={<FrontPage />}/>
-        <Route path={ROUTES.SIGNIN} element={<SignInPage />}/>
-        <Route path={ROUTES.SIGNUP} element={<SignUpPage />}/>
         <Route 
-          path={ROUTES.USERS} 
-          element={
-            <ProtectedRoute
-              allowableScopes={[UserScopes.Admin]}
-            >
-              <UsersPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route 
-          path={ROUTES.RESOURCES} 
+          path={ROUTES.HOME} 
           element={
             <ProtectedRoute
               allowableScopes={[UserScopes.User, UserScopes.Admin]}
             >
-              <ResourcesPage />
+              <FrontPage />
             </ProtectedRoute>
           }
         />
+        <Route path={ROUTES.SIGNIN} element={<SignInPage />}/>
+        <Route path={ROUTES.SIGNUP} element={<SignUpPage />}/>
         <Route 
           path={ROUTES.VERIFY} 
           element={

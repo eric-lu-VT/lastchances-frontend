@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { getBearerToken } from './utils/localStorage';
@@ -8,7 +8,7 @@ import './styles.scss';
 import { jwtSignIn, logout } from './redux/slices/authSlice';
 
 const container = document.getElementById('root')!;
-const root = createRoot(container);
+const root = ReactDOM.createRoot(container);
 
 const authToken = getBearerToken();
 if(authToken) {

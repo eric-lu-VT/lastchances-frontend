@@ -5,6 +5,4 @@ export const ROUTES = {
   SIGNIN: '/signin',
   SIGNUP: '/signup',
   VERIFY: '/verify',
-  USERS: '/users',
-  RESOURCES: '/resources'
 }
