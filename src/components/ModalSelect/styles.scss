@@ -1,0 +1,46 @@
+.modal-select {
+  body {
+    background: #fcfcfc;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .input-row {
+    padding: 10px;
+    height: 20px;
+    font-size: 18px;
+
+    .input {
+      width: 163px;
+      font-size: 18px;
+    }
+  }
+
+  .submit-row {
+    width: 523px;
+    text-align: right;
+    justify-content: left;
+    align-items: left;
+    flex-direction: column;
+  }
+
+  .dropdown-container {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    background-color: whitesmoke;
+    max-height: 150px;
+    width: 510px;
+    overflow-y: auto;
+  }
+
+  .dropdown-item {
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    &:hover {
+      background-color: gray;
+      cursor: pointer;
+    }
+  }
+}
