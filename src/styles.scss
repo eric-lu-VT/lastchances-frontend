@@ -15,4 +15,41 @@ body, html {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  .inner-container {
+    text-align: left;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    flex-direction: column;
+  }
+
+  .green {
+    color: #00693e;
+  }
+
+  .link {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .icon {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .button {
+    background-color: #00693e;
+    color: white;
+    border-radius: 10px;
+    &:hover {
+      cursor: pointer;
+    }
+    min-height: 26px; 
+    min-width: 120px;
+    border: none; 
+    vertical-align :middle
+  }
 }

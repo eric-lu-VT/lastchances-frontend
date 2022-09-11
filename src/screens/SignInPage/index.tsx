@@ -31,7 +31,7 @@ function SignInPage() {
         <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <input type="submit" value="Sign In" />
       </form>
-      <h3>Don't have an accout? 
+      <h3>Don't have an account? 
         <button 
           className='button'
           onClick={() => navigate(ROUTES.SIGNUP)}>
