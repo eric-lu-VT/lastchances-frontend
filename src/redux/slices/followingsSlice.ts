@@ -12,14 +12,14 @@ export interface IFollowing {
 
 export interface FollowingState {
   loading: boolean,
-  crushes: Record<string, IFollowing>,
-  matches: Record<string, IFollowing>,
+  crushes: IFollowing[],
+  matches: IFollowing[],
 }
 
 const initialState: FollowingState = {
   loading: false,
-  crushes: {},
-  matches: {},
+  crushes: [],
+  matches: [],
 };
 
 export const getMatches = createAsyncThunk(
@@ -41,16 +41,33 @@ export const getMatches = createAsyncThunk(
 
 export const createFollowing = createAsyncThunk(
   'followings/createFollowing',
-  async (req: { title: string, description: string, value: number }, { dispatch }) => {
+  async (req: { followedName: string, followedEmail: string, followerId: string }, { dispatch }) => {
     dispatch(startFollowingLoading());
     return await axios
-      .post(`${SERVER_URL}followings/`, req)
+      .post(`${SERVER_URL}followings/${req.followerId}`, req)
       .finally(() => dispatch(stopFollowingLoading()))
       .then((response) => {
         return response.data;
       })
       .catch((error) => {
         console.error('Error when creating following', error);
+        return false;
+      });
+  }
+);
+
+export const getFollowings = createAsyncThunk(
+  'followings/getFollowings',
+  async (req: { userId: string}, { dispatch }) => {
+    dispatch(startFollowingLoading());
+    return await axios
+      .get(`${SERVER_URL}followings/${req.userId}`)
+      .finally(() => dispatch(stopFollowingLoading()))
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.error('Error when getting followings', error);
         return false;
       });
   }
@@ -66,14 +83,22 @@ export const followingSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getMatches.fulfilled, (state, action) => {
       const followings: IFollowing[] = action.payload as IFollowing[];
+      state.matches = [];
       followings.forEach((following: IFollowing) => {
-        state.matches[following.id] = following;
+        state.matches.push(following);
       });
     });
     builder.addCase(createFollowing.fulfilled, (state, action) => {
       const following: IFollowing = action.payload as IFollowing;
-      state.crushes[following.id] = following;
+      state.crushes.push(following);
       alert('Created following as: ' + JSON.stringify(action.payload));
+    });
+    builder.addCase(getFollowings.fulfilled, (state, action) => {
+      const followings: IFollowing[] = action.payload as IFollowing[];
+      state.crushes = [];
+      followings.forEach((following: IFollowing) => {
+        state.crushes.push(following);
+      });
     });
   }
 });
