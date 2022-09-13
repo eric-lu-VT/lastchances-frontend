@@ -26,6 +26,9 @@ const ProtectedRoute = ({ allowableScopes, children }: ProtectedRouteProps) => {
   if (!authenticated) {
     return <SignInPage />
   }
+  else if (role === UserScopes.Unverified) {
+    return <VerifyPage />
+  }
   else if (!allowableScopes.includes(role)) {
     return <ForbiddenPage />
   }

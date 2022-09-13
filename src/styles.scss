@@ -5,7 +5,6 @@
 body, html {
   min-height: 100vh;
   margin: 0;
-  overflow: hidden;
   background-color: #e2e8f0;
 }
 
@@ -22,6 +21,12 @@ body, html {
     justify-content: left;
     align-items: left;
     flex-direction: column;
+  }
+
+  .form-container {
+    width: 500px;
+    display: flex;
+    flex-direction: row;
   }
 
   .green {
@@ -50,6 +55,18 @@ body, html {
     min-height: 26px; 
     min-width: 120px;
     border: none; 
-    vertical-align :middle
+    vertical-align :middle;
+    margin: 5px;
+  }
+
+  .submit {
+    min-width: 85%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    background-color: white;
+    border-radius: 20px;
+    text-align: center;
   }
 }

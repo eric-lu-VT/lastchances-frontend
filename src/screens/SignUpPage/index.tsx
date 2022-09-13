@@ -28,13 +28,15 @@ function SignUpPage() {
   return (
     <div className='container'>
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <input type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-        <input type="submit" value="Sign Up" />
-      </form>
+      <div className='form-container'>
+        <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="Name" className="submit" value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="email" placeholder="Email" className="submit" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="password" placeholder="Password" className="submit" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" placeholder="Confirm Password" className="submit" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          <input type="submit" className='button' value="Sign Up" />
+        </form>
+      </div>
     </div>
   );
 }
