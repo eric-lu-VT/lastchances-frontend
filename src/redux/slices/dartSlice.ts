@@ -37,7 +37,7 @@ export const getDartUsers = createAsyncThunk(
         return response.data;
       })
       .catch((error) => {
-        console.error('Error when getting users from Dartmouth API', error);
+        alert('Error when getting users from Dartmouth API: ' + error.response.data.errors[0]);
         return false;
       });
   }

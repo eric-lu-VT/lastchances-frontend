@@ -68,9 +68,11 @@ function FrontPage() {
               <h4>
                 You have {10 - Object.keys(crushes).length} crushes remaining.
               </h4>
-              <div className='container'>
-                <ModalSelect />
-              </div>
+              { Object.keys(crushes).length === 0 && 
+                  <div className='container'>
+                    <ModalSelect />
+                  </div>
+              }
             </>
           :
             <h2 
