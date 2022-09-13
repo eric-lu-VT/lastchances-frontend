@@ -33,7 +33,7 @@ export const getMatches = createAsyncThunk(
         return response.data;
       })
       .catch((error) => {
-        console.error('Error when getting matches for user', error);
+        alert('Error when getting matches: ' + error.response.data.errors[0]);
         return false;
       });
   }
@@ -50,7 +50,7 @@ export const createFollowing = createAsyncThunk(
         return response.data;
       })
       .catch((error) => {
-        console.error('Error when creating following', error);
+        alert('Error when creating following: ' + error.response.data.errors[0]);
         return false;
       });
   }
@@ -67,7 +67,7 @@ export const getFollowings = createAsyncThunk(
         return response.data;
       })
       .catch((error) => {
-        console.error('Error when getting followings', error);
+        alert('Error when getting followings: ' + error.response.data.errors[0]);
         return false;
       });
   }

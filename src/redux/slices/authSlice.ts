@@ -3,7 +3,12 @@ import { SERVER_URL } from '../../utils/constants.js';
 import { RootState, AppThunk } from '../store';
 import axios from 'axios';
 import { getBearerToken, setBearerToken } from '../../utils/localStorage.js';
-import { UserScopes } from './usersSlice';
+
+export enum UserScopes {
+  Unverified = 'UNVERIFIED',
+  User = 'USER',
+  Admin = 'ADMIN',
+}
 
 export interface AuthState {
   authenticated: boolean,
@@ -36,18 +41,17 @@ interface LoginResponse {
 
 export const signUp = createAsyncThunk(
   'auth/signup',
-  async (credentials: { email: string, password: string, name: string }, { dispatch }) => {
+  async (credentials: { email: string, password: string }, { dispatch }) => {
     dispatch(startAuthLoading());
     return await axios
       .post(`${SERVER_URL}auth/signup`, credentials)
       .finally(() => dispatch(stopAuthLoading()))
       .then((response) => {
         alert('Sign up successful!');
-        return response.data;
       })
-      .catch((error) => {
-        console.error('Error when signing up', error);
-        return false;
+      .catch((err) => {
+        alert(err.response.data.errors[0]);
+        throw err;
       });
   }
 );
@@ -70,12 +74,12 @@ export const signIn = createAsyncThunk(
         alert('Signed In!');
         return { ...response.data };
       })
-      .catch((error) => {
+      .catch((err) => {
         alert(
           'Unable to log in, please ensure your email and password are correct.'
         );
-        console.error('Error when logging in', error);
-        throw error;
+        // console.error('Error when logging in', error);
+        throw err;
       });
   }
 );
@@ -133,8 +137,9 @@ export const resendCode = createAsyncThunk(
         }
         return isRejectedWithValue(response.statusText);
       })
-      .catch((error) => {
-        console.error('Error when sending code', error);
+      .catch((err) => {
+        alert('Error when sending code: ' + err.response.data.errors[0]);
+        throw err;
       });
   }
 );
@@ -147,8 +152,9 @@ export const verify = createAsyncThunk(
       .then((response) => {
         return response.data;
       })
-      .catch((error) => {
-        console.error('Error when verifying', error);
+      .catch((err) => {
+        alert(err.response.data.errors[0]);
+        throw err;
       });
   }
 );
@@ -201,7 +207,7 @@ export const authSlice = createSlice({
         state = ({ ...state, ...action.payload.user });
         state.authenticated = true;
       }
-      alert('Your account has been authorized!')
+      alert('Your account has been authorized!');
       return state;
     });
   },

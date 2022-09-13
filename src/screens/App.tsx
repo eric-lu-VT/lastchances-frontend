@@ -7,7 +7,7 @@ import useAppSelector from '../hooks/useAppSelector';
 import useAppDispatch from '../hooks/useAppDispatch';
 import { checkConnection } from '../redux/slices/connectionSlice';
 import { ROUTES } from '../utils/constants';
-import { UserScopes } from '../redux/slices/usersSlice';
+import { UserScopes } from '../redux/slices/authSlice';
 import FrontPage from './FrontPage';
 import ErrorPage from './ErrorPage';
 import ForbiddenPage from './ForbiddenPage';
