@@ -11,13 +11,19 @@
     font-size: 18px;
 
     .input {
+      min-height: 26px; 
       width: 163px;
-      font-size: 18px;
+      font-size: 16px;
+      box-sizing: border-box;
+      border: none;
+      background-color: white;
+      border-radius: 20px;
+      text-align: center;
     }
   }
 
   .submit-row {
-    width: 523px;
+    width: 504px;
     text-align: right;
     justify-content: left;
     align-items: left;
@@ -29,17 +35,19 @@
     margin-right: 10px;
     border-width: 1px 1px 1px 1px;
     border-style: solid;
-    background-color: whitesmoke;
+    background-color: white;
     max-height: 150px;
     width: 510px;
     overflow-y: auto;
+    box-sizing: border-box;
+    border: none;
   }
 
   .dropdown-item {
     border-width: 1px 1px 1px 1px;
     border-style: solid;
     &:hover {
-      background-color: gray;
+      font-weight: bold;
       cursor: pointer;
     }
   }

@@ -21,10 +21,10 @@ function SignInPage() {
     <div className='container'>
       <h1>Verify</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Code" value={code} onChange={(e) => setCode(e.target.value)} />
-        <input type="submit" value="Validate Code" />
+        <input type="text" placeholder="Code" className="submit" value={code} onChange={(e) => setCode(e.target.value)} />
+        <input type="submit" className='button' value="Validate Code" />
       </form>
-      <button onClick={(e) => dispatch(resendCode({ id, email }))}>Resend Code</button>
+      <button className='button' onClick={(e) => dispatch(resendCode({ id, email }))}>Resend Code</button>
     </div>
   );
 }

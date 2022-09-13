@@ -27,17 +27,16 @@ function SignInPage() {
     <div className='container'>
       <h1>Sign In</h1>
       <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <input type="submit" value="Sign In" />
+        <input type="email" placeholder="Email" className="submit" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input type="password" placeholder="Password" className="submit" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input className='button' type="submit" value="Sign In" />
       </form>
-      <h3>Don't have an account? 
-        <button 
-          className='button'
-          onClick={() => navigate(ROUTES.SIGNUP)}>
-            Sign Up
-        </button>
-      </h3>
+      <h3>Don't have an account?</h3>
+      <button 
+        className='button'
+        onClick={() => navigate(ROUTES.SIGNUP)}>
+          Sign Up
+      </button>
     </div>
   );
 }
