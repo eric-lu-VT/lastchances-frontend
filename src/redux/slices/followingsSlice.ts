@@ -90,8 +90,10 @@ export const followingSlice = createSlice({
     });
     builder.addCase(createFollowing.fulfilled, (state, action) => {
       const following: IFollowing = action.payload as IFollowing;
-      state.crushes.push(following);
-      alert('Created following as: ' + JSON.stringify(action.payload));
+      if(following) {
+        state.crushes.push(following);
+        alert('Created following as: ' + JSON.stringify(action.payload));
+      }
     });
     builder.addCase(getFollowings.fulfilled, (state, action) => {
       const followings: IFollowing[] = action.payload as IFollowing[];
