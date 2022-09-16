@@ -37,7 +37,7 @@ function FrontPage() {
         <div>
           Your picks are kept private unless you are matched.
           Matches are done by a computer program.<br></br>
-          Concerns? Questions? <b>lastchances@gmail.com</b>
+          Concerns? Questions? <b>lastchances22f@gmail.com</b>
         </div>
         <div>
           {isAddPageOpen ?
@@ -68,7 +68,7 @@ function FrontPage() {
               <h4>
                 You have {10 - Object.keys(crushes).length} crushes remaining.
               </h4>
-              { Object.keys(crushes).length === 0 && 
+              { 10 - Object.keys(crushes).length >= 0 && 
                   <div className='container'>
                     <ModalSelect />
                   </div>
