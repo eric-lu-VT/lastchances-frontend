@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '../../utils/constants';
 import { logout } from '../../redux/slices/authSlice';
 import { ModalSelect } from '../../components/ModalSelect';
-import { IFollowing, getFollowings } from '../../redux/slices/followingsSlice';
+import { IFollowing, getFollowings, getMatches } from '../../redux/slices/followingsSlice';
 import { AiFillCaretRight, AiFillCaretDown } from 'react-icons/ai';
 
 function FrontPage() {
@@ -19,6 +19,10 @@ function FrontPage() {
   
   useEffect(() => {
     dispatch(getFollowings({ userId: id }));
+  }, []);
+
+  useEffect(() => {
+    dispatch(getMatches({ userId: id }));
   }, []);
 
   return (
