@@ -1,6 +1,12 @@
-# Last Chances - Frontend
+# [Last Chances 22F](https://www.lastchances.net/)
 
-This repository
+Dating website that matches together Dartmouth students who select one another.
+
+Make sure to also check out the project [backend](https://github.com/eric-lu-VT/lastchances-backend)!
+
+## Impressions
+
+![img](https://i.imgur.com/ToWVUAA.png)
 
 ## Tech Stack
 - [React v18](https://reactjs.org/)
