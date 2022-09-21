@@ -194,7 +194,7 @@ export const authSlice = createSlice({
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${''}`;
-      alert('Logged out of account');
+      // alert('Logged out of account');
       return initialState;
     })
     builder.addCase(resendCode.fulfilled, () => {
