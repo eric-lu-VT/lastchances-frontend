@@ -6,8 +6,9 @@ import axios from 'axios';
 export interface IFollowing {
   id: string;
   followedName: string;
-  followedEmail: string; 
-  followerId: string;
+  followedNetId: string; 
+  followerNetId: string;
+  followerUserId: string;
 }
 
 export interface FollowingState {
@@ -41,10 +42,10 @@ export const getMatches = createAsyncThunk(
 
 export const createFollowing = createAsyncThunk(
   'followings/createFollowing',
-  async (req: { followedName: string, followedEmail: string, followerId: string }, { dispatch }) => {
+  async (req: { followedName: string, followedNetId: string, followerNetId: string, followerUserId: string }, { dispatch }) => {
     dispatch(startFollowingLoading());
     return await axios
-      .post(`${SERVER_URL}followings/${req.followerId}`, req)
+      .post(`${SERVER_URL}followings/${req.followerUserId}`, req)
       .finally(() => dispatch(stopFollowingLoading()))
       .then((response) => {
         return response.data;
@@ -58,7 +59,7 @@ export const createFollowing = createAsyncThunk(
 
 export const getFollowings = createAsyncThunk(
   'followings/getFollowings',
-  async (req: { userId: string}, { dispatch }) => {
+  async (req: { userId: string }, { dispatch }) => {
     dispatch(startFollowingLoading());
     return await axios
       .get(`${SERVER_URL}followings/${req.userId}`)
@@ -92,7 +93,7 @@ export const followingSlice = createSlice({
       const following: IFollowing = action.payload as IFollowing;
       if(following) {
         state.crushes.push(following);
-        alert('Created following for: ' + following.followedName + ', <' + following.followedEmail + '>');
+        alert('Created following for: ' + following.followedName + ', netid =' + following.followedNetId + '>');
       }
     });
     builder.addCase(getFollowings.fulfilled, (state, action) => {

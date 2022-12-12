@@ -6,7 +6,7 @@ import { createFollowing } from '../../redux/slices/followingsSlice';
 import './styles.scss';
 
 export function ModalSelect() {
-  const { id } = useAppSelector((state) => state.auth); 
+  const { id, netid } = useAppSelector((state) => state.auth); 
   const { loading, search } = useAppSelector((state) => state.dart);
   const dispatch = useAppDispatch();
   
@@ -120,7 +120,7 @@ export function ModalSelect() {
       <div className='submit-row'>
         <button
           className='button'
-          onClick={(e) => dispatch(createFollowing({ followedName: selectedUser.name, followedEmail: selectedUser.email, followerId: id }))}
+          onClick={(e) => dispatch(createFollowing({ followedName: selectedUser.name, followedNetId: selectedUser.netid, followerNetId: netid, followerUserId: id }))}
         >
           Submit
         </button>

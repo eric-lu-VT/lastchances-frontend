@@ -2,40 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
-import { signIn } from '../../redux/slices/authSlice';
-import { ROUTES } from '../../utils/constants';
+import { ROUTES, SERVER_URL } from '../../utils/constants';
 
 function SignInPage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Send only if all fields filled in
-    if (!email) alert('Please enter an email address!');
-    else if (!password) alert('Please enter a password!');
-    else {
-      dispatch(signIn({ email, password }));
-    }
-  };
-
   return (
     <div className='container'>
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="email" placeholder="Email" className="submit" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="Password" className="submit" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <input className='button' type="submit" value="Sign In" />
-      </form>
-      <h3>Don't have an account?</h3>
       <button 
         className='button'
-        onClick={() => navigate(ROUTES.SIGNUP)}>
-          Sign Up
+        onClick={() => window.open(`${SERVER_URL}auth/cas-signin`, '_self')}
+      >
+        CAS Sign In
       </button>
     </div>
   );
