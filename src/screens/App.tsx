@@ -12,8 +12,8 @@ import FrontPage from './FrontPage';
 import ErrorPage from './ErrorPage';
 import ForbiddenPage from './ForbiddenPage';
 import SignInPage from './SignInPage';
-import SignUpPage from './SignUpPage';
-import VerifyPage from './VerifyPage';
+import { jwtSignIn } from '../redux/slices/authSlice';
+import { setBearerToken } from '../utils/localStorage';
 
 interface ProtectedRouteProps {
   allowableScopes: UserScopes[];
@@ -25,9 +25,6 @@ const ProtectedRoute = ({ allowableScopes, children }: ProtectedRouteProps) => {
 
   if (!authenticated) {
     return <SignInPage />
-  }
-  else if (role === UserScopes.Unverified) {
-    return <VerifyPage />
   }
   else if (!allowableScopes.includes(role)) {
     return <ForbiddenPage />
@@ -46,7 +43,17 @@ function App() {
   
   useEffect(() => {
     dispatch(checkConnection());
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (isConnected) {
+      console.log(window.location.search);
+      if (window.location.search.includes('?token=')) {
+        setBearerToken(window.location.search.substring(7));
+      }
+      dispatch(jwtSignIn({}));
+    }
+  }, [isConnected])
 
   if (!isConnected) return <ErrorPage />
 
@@ -60,18 +67,6 @@ function App() {
               allowableScopes={[UserScopes.User, UserScopes.Admin]}
             >
               <FrontPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route path={ROUTES.SIGNIN} element={<SignInPage />}/>
-        <Route path={ROUTES.SIGNUP} element={<SignUpPage />}/>
-        <Route 
-          path={ROUTES.VERIFY} 
-          element={
-            <ProtectedRoute
-              allowableScopes={[UserScopes.Unverified]}
-            >
-              <VerifyPage />
             </ProtectedRoute>
           }
         />
