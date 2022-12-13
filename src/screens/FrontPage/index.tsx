@@ -1,4 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box, 
+  Button, 
+  Grid,
+  ListItem,
+  OrderedList,
+  Text,
+  UnorderedList,
+  VStack 
+} from '@chakra-ui/react';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { Link } from 'react-router-dom';
@@ -13,10 +28,6 @@ function FrontPage() {
   const { name, id } = useAppSelector((state) => state.auth)
   const { crushes, matches } = useAppSelector((state) => state.following)
 
-  const [isAddPageOpen, setIsAddPageOpen] = useState<boolean>(false);
-  const [isViewCrushesOpen, setIsViewCrushesOpen] = useState<boolean>(false);
-  const [isViewMatchesOpen, setIsViewMatchesOpen] = useState<boolean>(false);
-  
   useEffect(() => {
     dispatch(getFollowings({ userId: id }));
   }, []);
@@ -26,158 +37,131 @@ function FrontPage() {
   }, []);
 
   return (
-    <div className='container'>
-      <div className='inner-container'>
-        <h1 className='green'>LAST CHANCES - <em>STAY THIRSTY DARTMOUTH</em></h1>
-        <h2>
-          LOGGED IN AS {name.toUpperCase()}.&nbsp;
-          <button
-            className='button'
+    <Box textAlign='center' fontSize='xl'>
+      <Grid minH='100vh' p={3}>
+        <VStack spacing={8}>
+          <Text fontSize='3xl'>
+            LAST CHANCES - STAY THIRSTY DARTMOUTH
+          </Text>
+          <Text fontSize='3xl'>
+            LOGGED IN AS {name.toUpperCase()}
+          </Text>
+          <Button
+            size='md'
             onClick={(e) => dispatch(logout({}))}
           >
-            Logout
-          </button>
-        </h2>
-        <div>
-          Your picks are kept private unless you are matched.
-          Matches are done by a computer program.<br></br>
-          Concerns? Questions? <b>lastchances22f@gmail.com</b>
-        </div>
-        <div>
-          {isAddPageOpen ?
-            <>
-              <h2 
-                className='green link'
-                onClick={(e) => setIsAddPageOpen(false)}
-              >
-                ADD NEW CRUSHES
-                <AiFillCaretDown
-                  className='icon'
-                  size={20}
-                />
+            Log Out
+          </Button>
+          <Text fontSize='2xl'>
+            Your picks are kept private unless you are matched.
+            Matches are done by a computer program.
+            Concerns? Questions? lastchances22f@gmail.com
+          </Text>
+          <Accordion 
+            allowToggle
+            width='60%'
+          >
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box as="span" flex='1' textAlign='left'>
+                    ADD NEW CRUSHES
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
               </h2>
-              <h3>
-                HOW TO USE:
-              </h3>
-              <text>
-                <ol>
-                  <li>Search by name (first, middle, last) in the boxes below.</li>
-                  <li>Click on the suggested name you desire.</li>
-                  <li>Press submit to add your crush!</li>
-                </ol>
-              </text>
-              <h4>
-                Crush entries cannot be deleted, and you can only choose up to 10. Choose carefully!
-              </h4>
-              <h4>
-                You have {10 - Object.keys(crushes).length} crushes remaining.
-              </h4>
-              { 10 - Object.keys(crushes).length >= 0 && 
-                  <div className='container'>
-                    <ModalSelect />
-                  </div>
-              }
-            </>
-          :
-            <h2 
-              className='green link'
-              onClick={(e) => setIsAddPageOpen(true)}
-            >
-              ADD NEW CRUSHES
-              <AiFillCaretRight
-                className='icon'
-                size={20}
-              />
-            </h2>
-          }
-          {isViewCrushesOpen ?
-            <>
-              <h2 
-                className='green link'
-                onClick={(e) => setIsViewCrushesOpen(false)}
-              >
-                VIEW YOUR CRUSHES
-                <AiFillCaretDown
-                  className='icon'
-                  size={20}
-                />
+              <AccordionPanel pb={4}>
+                <Text fontSize='1xl'>
+                  HOW TO USE:
+                </Text>
+                <UnorderedList>
+                  <ListItem>
+                    Search by name (first, middle, last) in the boxes below.
+                  </ListItem>
+                  <ListItem>
+                    Click on the suggested name you desire.
+                  </ListItem>
+                  <ListItem>
+                    Press submit to add your crush!
+                  </ListItem>
+                </UnorderedList>
+                <Text fontSize='1xl'>
+                  Crush entries cannot be deleted, and you can only choose up to 10. Choose carefully!
+                </Text>
+                <Text fontSize='1xl'>
+                  You have {10 - Object.keys(crushes).length} crushes remaining.
+                </Text>
+                <ModalSelect />
+              </AccordionPanel>
+            </AccordionItem>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box as="span" flex='1' textAlign='left'>
+                    VIEW YOUR CRUSHES
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
               </h2>
-              {
-                crushes.length !== 0 ?
-                <ol>
-                  { 
-                    crushes.map((value: IFollowing, i) => {
-                      return (
-                        <li
-                          key={i}
-                        >
-                          { value.followedName }
-                        </li>
-                      )
-                    })
-                  }
-                </ol>
-                :
-                  <div>You haven't submitted any crushes :(</div>
-              }
-            </>
-          :
-            <h2 
-              className='green link'
-              onClick={(e) => setIsViewCrushesOpen(true)}
-            >
-              VIEW YOUR CRUSHES
-              <AiFillCaretRight
-                className='icon'
-                size={20}
-              />
-            </h2>
-          }
-          {isViewMatchesOpen ?
-            <>
-              <h2 
-                className='green link'
-                onClick={(e) => setIsViewMatchesOpen(false)}
-              >
-                VIEW YOUR MATCHES
-                <AiFillCaretDown
-                  className='icon'
-                  size={20}
-                />
+              <AccordionPanel pb={4}>
+                {
+                  crushes.length > 0 ?
+                    <OrderedList>
+                      {
+                        crushes.map((value: IFollowing, i) => {
+                          return (
+                            <ListItem
+                              key={i}
+                            >
+                              { value.followedName }
+                            </ListItem>
+                          )
+                        })
+                      }
+                    </OrderedList>
+                  :
+                    <Text fontSize='1xl'>
+                      You haven't submitted any crushes :(
+                    </Text>
+                }
+              </AccordionPanel>
+            </AccordionItem>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box as="span" flex='1' textAlign='left'>
+                    VIEW YOUR MATCHES
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
               </h2>
-              { matches.length !== 0 ?
-                <ol>
-                  { 
-                    matches.map((value: IFollowing, i) => {
-                      return (
-                        <li
-                          key={i}
-                        >
-                          { value.followedName }
-                        </li>
-                      )
-                    })
-                  }
-                </ol>
-              :
-                <div>You have no matches :(</div>
-              }
-            </>
-          :
-            <h2 
-              className='green link'
-              onClick={(e) => setIsViewMatchesOpen(true)}
-            >
-              VIEW YOUR MATCHES
-              <AiFillCaretRight
-                className='icon'
-                size={20}
-              />
-            </h2>
-          }
-        </div>
-      </div>
-    </div>
+              <AccordionPanel pb={4}>
+                {
+                  crushes.length > 0 ?
+                    <OrderedList>
+                      {
+                        matches.map((value: IFollowing, i) => {
+                          return (
+                            <ListItem
+                              key={i}
+                            >
+                              { value.followedName }
+                            </ListItem>
+                          )
+                        })
+                      }
+                    </OrderedList>
+                  :
+                    <Text fontSize='1xl'>
+                      You have no matches :(
+                    </Text>
+                }
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </VStack>
+      </Grid>
+    </Box>
   );
 }
 

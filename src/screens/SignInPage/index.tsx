@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useAppSelector from '../../hooks/useAppSelector';
-import useAppDispatch from '../../hooks/useAppDispatch';
-import { ROUTES, SERVER_URL } from '../../utils/constants';
+import React from 'react';
+import { Box, Button, Grid, VStack } from '@chakra-ui/react';
+import { SERVER_URL } from '../../utils/constants';
 
 function SignInPage() {
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  
   return (
-    <div className='container'>
-      <button 
-        className='button'
-        onClick={() => window.open(`${SERVER_URL}auth/cas-signin`, '_self')}
-      >
-        CAS Sign In
-      </button>
-    </div>
+    <Box textAlign='center' fontSize='xl'>
+      <Grid minH='100vh' p={3}>
+        <VStack spacing={8}>
+          <Button
+            size='md'
+            onClick={() => window.open(`${SERVER_URL}auth/cas-signin`, '_self')}
+          >
+            CAS Sign In
+          </Button>
+        </VStack>
+      </Grid>
+    </Box>
   );
 }
 
