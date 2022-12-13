@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { ChakraProvider } from '@chakra-ui/react'
 import { store } from './redux/store';
 import { getBearerToken } from './utils/localStorage';
 import App from './screens/App';
@@ -20,7 +21,9 @@ if(authToken) {
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ChakraProvider>
+        <App />
+      </ChakraProvider>
     </Provider>
   </React.StrictMode>
 );
