@@ -96,10 +96,10 @@ function FrontPage() {
             Matches are done by a computer program.
             Concerns? Questions?{' '}
             <Link
-              href='mailto:lastchances22f@gmail.com'
+              href='mailto:lastchances.dart@gmail.com'
               color='#00693e'
             >
-              lastchances22f@gmail.com
+              lastchances.dart@gmail.com
             </Link>
           </chakra.p>
           <Accordion 
