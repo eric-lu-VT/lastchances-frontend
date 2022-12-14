@@ -6,22 +6,22 @@ import {
   AccordionItem,
   AccordionPanel,
   Box, 
-  Button, 
+  Center, 
+  chakra,
   Grid,
+  Link,
   ListItem,
   OrderedList,
-  Text,
   UnorderedList,
+  useColorModeValue,
   VStack 
 } from '@chakra-ui/react';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '../../utils/constants';
 import { logout } from '../../redux/slices/authSlice';
 import { ModalSelect } from '../../components/ModalSelect';
 import { IFollowing, getFollowings, getMatches } from '../../redux/slices/followingsSlice';
-import { AiFillCaretRight, AiFillCaretDown } from 'react-icons/ai';
+import '../../utils/global.css';
 
 function FrontPage() {
   const dispatch = useAppDispatch();
@@ -36,68 +36,104 @@ function FrontPage() {
     dispatch(getMatches({ userId: id }));
   }, []);
 
+  // TODO: STAY THIRSTY DARTMOUTH
+
   return (
     <Box textAlign='center' fontSize='xl'>
       <Grid minH='100vh' p={3}>
         <VStack spacing={8}>
-          <Text fontSize='3xl'>
-            LAST CHANCES - STAY THIRSTY DARTMOUTH
-          </Text>
-          <Text fontSize='3xl'>
-            LOGGED IN AS {name.toUpperCase()}
-          </Text>
-          <Button
-            size='md'
-            onClick={(e) => dispatch(logout({}))}
+          <chakra.p
+            bgGradient={`linear(to-r, ${useColorModeValue(
+              `brand.600`,
+              `brand.400`
+            )}, ${useColorModeValue(`teal.600`, `teal.400`)}, ${useColorModeValue(
+              `blue.600`,
+              `blue.300`
+            )})`}
+            className='moving-grad'
+            bgClip='text'
+            fontSize={{ base: `5xl`, lg: `7xl` }}
+            textAlign={{ base: `center`, lg: `left` }}
           >
-            Log Out
-          </Button>
-          <Text fontSize='2xl'>
+            LAST CHANCES
+          </chakra.p>
+          <chakra.p>
+            LOGGED IN AS {name.toUpperCase()}.{' '}
+            <Link
+              onClick={(e) => dispatch(logout({}))}
+            >
+              LOGOUT.
+            </Link>
+          </chakra.p>
+          <chakra.p
+            maxW='650px'
+            textAlign={{ base: `center`, lg: `left` }}
+            fontSize='xl'
+            mt={2}
+          >
             Your picks are kept private unless you are matched.
             Matches are done by a computer program.
-            Concerns? Questions? lastchances22f@gmail.com
-          </Text>
+            Concerns? Questions?{' '}
+            <Link
+              href='mailto:lastchances22f@gmail.com'
+            >
+              lastchances22f@gmail.com
+            </Link>
+          </chakra.p>
           <Accordion 
-            allowToggle
+            allowMultiple
             width='60%'
           >
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box as="span" flex='1' textAlign='left'>
+                  <Box as='span' flex='1' textAlign='left'>
                     ADD NEW CRUSHES
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <Text fontSize='1xl'>
+                <chakra.p
+                  fontSize='xl'
+                  mt={2}
+                >
                   HOW TO USE:
-                </Text>
-                <UnorderedList>
-                  <ListItem>
-                    Search by name (first, middle, last) in the boxes below.
-                  </ListItem>
-                  <ListItem>
-                    Click on the suggested name you desire.
-                  </ListItem>
-                  <ListItem>
-                    Press submit to add your crush!
-                  </ListItem>
-                </UnorderedList>
-                <Text fontSize='1xl'>
+                </chakra.p>
+                <Center>
+                  <UnorderedList
+                    textAlign='left'
+                  >
+                    <ListItem>
+                      Search by name (first, middle, last) in the boxes below.
+                    </ListItem>
+                    <ListItem>
+                      Click on the suggested name you desire.
+                    </ListItem>
+                    <ListItem>
+                      Press submit to add your crush!
+                    </ListItem>
+                  </UnorderedList>
+                </Center>
+                <chakra.p
+                  fontSize='xl'
+                  mt={2}
+                >
                   Crush entries cannot be deleted, and you can only choose up to 10. Choose carefully!
-                </Text>
-                <Text fontSize='1xl'>
+                </chakra.p>
+                <chakra.p
+                  fontSize='xl'
+                  mt={2}
+                >
                   You have {10 - Object.keys(crushes).length} crushes remaining.
-                </Text>
+                </chakra.p>
                 <ModalSelect />
               </AccordionPanel>
             </AccordionItem>
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box as="span" flex='1' textAlign='left'>
+                  <Box as='span' flex='1' textAlign='left'>
                     VIEW YOUR CRUSHES
                   </Box>
                   <AccordionIcon />
@@ -106,30 +142,37 @@ function FrontPage() {
               <AccordionPanel pb={4}>
                 {
                   crushes.length > 0 ?
-                    <OrderedList>
-                      {
-                        crushes.map((value: IFollowing, i) => {
-                          return (
-                            <ListItem
-                              key={i}
-                            >
-                              { value.followedName }
-                            </ListItem>
-                          )
-                        })
-                      }
-                    </OrderedList>
+                    <Center>
+                      <OrderedList
+                        alignItems='left'
+                      >
+                        {
+                          crushes.map((value: IFollowing, i) => {
+                            return (
+                              <ListItem
+                                key={i}
+                              >
+                                { value.followedName }
+                              </ListItem>
+                            )
+                          })
+                        }
+                      </OrderedList>
+                    </Center>
                   :
-                    <Text fontSize='1xl'>
+                    <chakra.p
+                      fontSize='xl'
+                      mt={2}
+                    >
                       You haven't submitted any crushes :(
-                    </Text>
+                    </chakra.p>
                 }
               </AccordionPanel>
             </AccordionItem>
             <AccordionItem>
               <h2>
                 <AccordionButton>
-                  <Box as="span" flex='1' textAlign='left'>
+                  <Box as='span' flex='1' textAlign='left'>
                     VIEW YOUR MATCHES
                   </Box>
                   <AccordionIcon />
@@ -137,24 +180,31 @@ function FrontPage() {
               </h2>
               <AccordionPanel pb={4}>
                 {
-                  crushes.length > 0 ?
-                    <OrderedList>
-                      {
-                        matches.map((value: IFollowing, i) => {
-                          return (
-                            <ListItem
-                              key={i}
-                            >
-                              { value.followedName }
-                            </ListItem>
-                          )
-                        })
-                      }
-                    </OrderedList>
+                  matches.length > 0 ?
+                    <Center>
+                      <OrderedList
+                        alignItems='left'
+                      >
+                        {
+                          matches.map((value: IFollowing, i) => {
+                            return (
+                              <ListItem
+                                key={i}
+                              >
+                                { value.followedName }
+                              </ListItem>
+                            )
+                          })
+                        }
+                      </OrderedList>
+                    </Center>
                   :
-                    <Text fontSize='1xl'>
+                    <chakra.p
+                      fontSize='xl'
+                      mt={2}
+                    >
                       You have no matches :(
-                    </Text>
+                    </chakra.p>
                 }
               </AccordionPanel>
             </AccordionItem>
