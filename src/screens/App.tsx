@@ -7,7 +7,7 @@ import useAppSelector from '../hooks/useAppSelector';
 import useAppDispatch from '../hooks/useAppDispatch';
 import { checkConnection } from '../redux/slices/connectionSlice';
 import { ROUTES } from '../utils/constants';
-import { UserScopes } from '../redux/slices/authSlice';
+import { logout, UserScopes } from '../redux/slices/authSlice';
 import FrontPage from './FrontPage';
 import ErrorPage from './ErrorPage';
 import ForbiddenPage from './ForbiddenPage';
@@ -50,28 +50,43 @@ function App() {
       console.log(window.location.search);
       if (window.location.search.includes('?token=')) {
         setBearerToken(window.location.search.substring(7));
+        window.location.replace(window.location.origin);
       }
-      dispatch(jwtSignIn({}));
+      try {
+        dispatch(jwtSignIn({}));
+      } catch (e) {
+        dispatch(logout({}));
+      }
     }
   }, [isConnected])
 
   if (!isConnected) return <ErrorPage />
 
   return (
-    <Router>
-      <Routes>
-        <Route 
-          path={ROUTES.HOME} 
-          element={
-            <ProtectedRoute
-              allowableScopes={[UserScopes.User, UserScopes.Admin]}
-            >
-              <FrontPage />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </Router>
+    <>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter&display=optional"
+        rel="stylesheet"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet"
+      />
+      <Router>
+        <Routes>
+          <Route 
+            path={ROUTES.HOME} 
+            element={
+              <ProtectedRoute
+                allowableScopes={[UserScopes.User, UserScopes.Admin]}
+              >
+                <FrontPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </>
   );
 }
 

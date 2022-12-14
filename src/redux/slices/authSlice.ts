@@ -58,13 +58,13 @@ export const jwtSignIn = createAsyncThunk(
       .finally(() => dispatch(stopAuthLoading()))
       .then((response) => {
         axios.defaults.headers.common[
-          "Authorization"
+          'Authorization'
         ] = `Bearer ${token}`; 
         return response.data;
       })
       .catch((err) => {
         console.error(err);
-        alert("Your login session has expired.");
+        alert('Your login session has expired.');
         throw err;
       });
   }
@@ -110,7 +110,7 @@ export const authSlice = createSlice({
     builder.addCase(logout.fulfilled, () => {
       setBearerToken('');
       axios.defaults.headers.common[
-        "Authorization"
+        'Authorization'
       ] = `Bearer ${''}`;
       // alert('Logged out of account');
       return initialState;

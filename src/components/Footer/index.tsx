@@ -103,6 +103,6 @@ const Footer = (): JSX.Element => {
         </Stack>
       </SimpleGrid>
     </Box>
-  )
+  );
 }
 export default Footer

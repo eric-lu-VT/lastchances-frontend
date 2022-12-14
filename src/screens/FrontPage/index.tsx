@@ -9,6 +9,7 @@ import {
   Center, 
   chakra,
   Grid,
+  Heading,
   Link,
   ListItem,
   OrderedList,
@@ -39,16 +40,20 @@ function FrontPage() {
   // TODO: STAY THIRSTY DARTMOUTH
 
   return (
-    <Box textAlign='center' fontSize='xl'>
+    <Box 
+      textAlign='center' 
+      fontSize='xl'
+      minH='100vh'
+    >
       <Grid minH='100vh' p={3}>
         <VStack spacing={8}>
-          <chakra.p
+          <Heading
             bgGradient={`linear(to-r, ${useColorModeValue(
-              `brand.600`,
-              `brand.400`
-            )}, ${useColorModeValue(`teal.600`, `teal.400`)}, ${useColorModeValue(
-              `blue.600`,
-              `blue.300`
+              `pink.600`,
+              `pink.400`
+            )}, ${useColorModeValue(`#00693e`, `#00693e`)}, ${useColorModeValue(
+              `pink.600`,
+              `pink.400`
             )})`}
             className='moving-grad'
             bgClip='text'
@@ -56,11 +61,27 @@ function FrontPage() {
             textAlign={{ base: `center`, lg: `left` }}
           >
             LAST CHANCES
+          </Heading>
+          <chakra.p
+            bgGradient={`linear(to-r, ${useColorModeValue(
+              `pink.600`,
+              `pink.400`
+            )}, ${useColorModeValue(`#00693e`, `#00693e`)}, ${useColorModeValue(
+              `pink.600`,
+              `pink.400`
+            )})`}
+            className='moving-grad'
+            bgClip='text'
+            fontSize={{ base: `3xl`, lg: `5xl` }}
+            textAlign={{ base: `center`, lg: `left` }}
+          >
+            STAY THIRSTY DARTMOUTH
           </chakra.p>
           <chakra.p>
             LOGGED IN AS {name.toUpperCase()}.{' '}
             <Link
               onClick={(e) => dispatch(logout({}))}
+              color='#00693e'
             >
               LOGOUT.
             </Link>
@@ -76,6 +97,7 @@ function FrontPage() {
             Concerns? Questions?{' '}
             <Link
               href='mailto:lastchances22f@gmail.com'
+              color='#00693e'
             >
               lastchances22f@gmail.com
             </Link>
@@ -144,7 +166,7 @@ function FrontPage() {
                   crushes.length > 0 ?
                     <Center>
                       <OrderedList
-                        alignItems='left'
+                        textAlign='left'
                       >
                         {
                           crushes.map((value: IFollowing, i) => {
@@ -183,7 +205,7 @@ function FrontPage() {
                   matches.length > 0 ?
                     <Center>
                       <OrderedList
-                        alignItems='left'
+                        textAlign='left'
                       >
                         {
                           matches.map((value: IFollowing, i) => {

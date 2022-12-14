@@ -1,4 +1,4 @@
-# [Last Chances 22F](https://www.lastchances.net/)
+# [Last Chances 22W](https://www.lastchances.net/)
 
 Dating website that matches together Dartmouth students who select one another.
 
@@ -6,7 +6,7 @@ Make sure to also check out the project [backend](https://github.com/eric-lu-VT/
 
 ## Impressions
 
-![img](https://i.imgur.com/ToWVUAA.png)
+![img](https://i.imgur.com/8riOjLK.png)
 
 ## Tech Stack
 - [React v18](https://reactjs.org/)
