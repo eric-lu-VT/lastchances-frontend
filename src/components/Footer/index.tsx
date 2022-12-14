@@ -1,6 +1,5 @@
 import {
   Stack,
-  Text,
   useColorModeValue,
   Box,
   chakra,
@@ -97,12 +96,16 @@ const Footer = (): JSX.Element => {
           </Tooltip>
         </chakra.p>
         <Stack direction='row' spacing={6} ml='auto' mr={{ base: `auto`, md: 5 }}>
-          <SocialIcons label='GitHub' href='https://github.com/eric-lu-VT/lastchances-frontend'>
-            <FaGithub />
-          </SocialIcons>
+        
         </Stack>
       </SimpleGrid>
     </Box>
   );
 }
-export default Footer
+export default Footer;
+
+/*
+<SocialIcons label='GitHub' href='https://github.com/eric-lu-VT/lastchances-frontend'>
+  <FaGithub />
+</SocialIcons>
+*/

@@ -11,8 +11,8 @@ Make sure to also check out the project [backend](https://github.com/eric-lu-VT/
 ## Tech Stack
 - [React v18](https://reactjs.org/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
-- [axios](https://github.com/axios/axios)
-- [React Router v6](https://reactrouter.com/en/main)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Chakra UI](https://chakra-ui.com/)
 
 ## Directory Structure
     .
