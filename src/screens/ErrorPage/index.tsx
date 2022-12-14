@@ -1,8 +1,16 @@
+import {
+  Box, 
+  Grid,
+  Text,
+} from '@chakra-ui/react';
+
 function ErrorPage() {
   return (
-    <div className='container'>
-      <h3>Loading...</h3>
-    </div>
+    <Box textAlign='center' fontSize='xl'>
+      <Grid minH='100vh' p={3}>
+        <Text>Loading...</Text>
+      </Grid>
+    </Box>
   );
 }
 

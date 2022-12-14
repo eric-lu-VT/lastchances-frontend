@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, RefObject } from 'react';
 import {
   Box,
   Button,
+  chakra,
   HStack,
   Input,
   TableContainer,
@@ -15,7 +16,6 @@ import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { DartQuery, getDartUsers } from '../../redux/slices/dartSlice';
 import { createFollowing } from '../../redux/slices/followingsSlice';
-import './styles.scss';
 
 export function ModalSelect() {
   const { id, netid } = useAppSelector((state) => state.auth); 
@@ -43,9 +43,9 @@ export function ModalSelect() {
   });
 
   useEffect(() => {
-    window.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener('mousedown', handleClickOutside);
     return () => {
-      window.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener('mousedown', handleClickOutside);
     };
   });
 
@@ -61,7 +61,7 @@ export function ModalSelect() {
       <Box>
         <HStack spacing='12px'>
           <Input
-            placeholder="Enter first name"
+            placeholder='Enter first name'
             onClick={() => setDisplay(!display)}
             value={firstName}
             onChange={(event) => {
@@ -70,7 +70,7 @@ export function ModalSelect() {
             }}
           />
           <Input
-            placeholder="Enter middle name"
+            placeholder='Enter middle name'
             onClick={() => setDisplay(!display)}
             value={middleName}
             onChange={(event) => {
@@ -79,7 +79,7 @@ export function ModalSelect() {
             }}
           />
           <Input
-            placeholder="Enter last name"
+            placeholder='Enter last name'
             onClick={() => setDisplay(!display)}
             value={lastName}
             onChange={(event) => {
@@ -94,9 +94,14 @@ export function ModalSelect() {
           <Box>
             {
               loading ?
-                <Text fontSize='1xl'>
+                <chakra.p
+                  maxW='650px'
+                  textAlign={{ base: `center`, lg: `left` }}
+                  fontSize='xl'
+                  mt={2}
+                >
                   Loading...
-                </Text>
+                </chakra.p>
               :
                 <TableContainer>
                   <Table size='md'>
@@ -124,7 +129,6 @@ export function ModalSelect() {
                                 });
                                 dispatch(getDartUsers({ first_name: value.first_name, middle_name: value.middle_name, last_name: value.last_name }));
                               }}
-                              className="dropdown-item"
                             >
                               <Td>
                                 {value.name}
