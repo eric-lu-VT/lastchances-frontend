@@ -21,6 +21,7 @@ const ToggleTheme = () => {
       variant='ghost'
       onClick={toggleMode}
       colorScheme='brand'
+      color='#00693e'
       icon={<SwitchIcon size={25} />}
     />
   )

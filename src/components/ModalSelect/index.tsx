@@ -1,16 +1,29 @@
 import React, { useEffect, useRef, useState, RefObject } from 'react';
 import {
+  Alert,
+  AlertDescription,
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogBody,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogOverlay,
+  AlertIcon,
+  AlertTitle,
   Box,
   Button,
   chakra,
+  CloseButton,
   HStack,
   Input,
+  Flex,
   TableContainer,
   Table,
   Tbody,
   Tr,
   Td,
-  Text,
+  useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -42,6 +55,20 @@ export function ModalSelect() {
     campus_address: '',
   });
 
+  const { 
+    isOpen: isSubmitModalOpen,
+    onOpen: onSubmitModalOpen,
+    onClose: onSubmitModalClose,
+  } = useDisclosure({ defaultIsOpen: false });
+  const cancelRef = React.useRef();
+
+  const {
+    isOpen: isAlertOpen,
+    onOpen: onAlertOpen,
+    onClose: onAlertClose,
+  } = useDisclosure({ defaultIsOpen: false });
+  const [isAlertSuccess, setIsAlertSuccess] = useState<boolean>(true);
+
   useEffect(() => {
     window.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -56,8 +83,51 @@ export function ModalSelect() {
     }
   };
 
+  const backgroundColor = useColorModeValue('green.400', 'green.600');
+
   return (
     <Box ref={ref}>
+      {
+        isAlertOpen && 
+          <Alert 
+            status={isAlertSuccess ? 'success' : 'error'}
+            style={{
+              position: 'absolute',
+              top: '0'
+            }}
+            maxW='56%'
+          >
+            <Flex
+              minWidth='100%'
+              alignItems='center' 
+              justifyContent='center'
+              gap='2'
+            >
+              <AlertIcon />
+              {
+                isAlertSuccess && 
+                  <AlertTitle>
+                    Success!
+                  </AlertTitle>
+              }
+              <AlertDescription>
+                {
+                  isAlertSuccess ?
+                    'Crush uploaded to the server.'
+                  :
+                    'There was an error processing your request'
+                }
+              </AlertDescription>
+              <CloseButton
+                alignSelf='flex-start'
+                position='relative'
+                right={-1}
+                top={-1}
+                onClick={onAlertClose}
+              />
+            </Flex>
+          </Alert>
+      }
       <Box>
         <HStack spacing='12px'>
           <Input
@@ -75,7 +145,7 @@ export function ModalSelect() {
             value={middleName}
             onChange={(event) => {
               setMiddleName(event.target.value);
-              dispatch(getDartUsers({ first_name: event.target.value, middle_name: middleName, last_name: lastName }));
+              dispatch(getDartUsers({ first_name: firstName, middle_name: event.target.value, last_name: lastName }));
             }}
           />
           <Input
@@ -84,7 +154,7 @@ export function ModalSelect() {
             value={lastName}
             onChange={(event) => {
               setLastName(event.target.value);
-              dispatch(getDartUsers({ first_name: event.target.value, middle_name: middleName, last_name: lastName }));
+              dispatch(getDartUsers({ first_name: firstName, middle_name: middleName, last_name: event.target.value }));
             }}
           />
         </HStack>
@@ -129,6 +199,9 @@ export function ModalSelect() {
                                 });
                                 dispatch(getDartUsers({ first_name: value.first_name, middle_name: value.middle_name, last_name: value.last_name }));
                               }}
+                              _hover={{ bg: backgroundColor }}
+                              _focus={{ boxShadow: 'outline' }}
+                              cursor={'pointer'}
                             >
                               <Td>
                                 {value.name}
@@ -143,12 +216,52 @@ export function ModalSelect() {
             }
             <Button
               size='md'
-              onClick={(e) => dispatch(createFollowing({ followedName: selectedUser.name, followedNetId: selectedUser.netid, followerNetId: netid, followerUserId: id }))}
+              onClick={onSubmitModalOpen}
+              backgroundColor='#00693e'
+              color='white'
             >
               Submit
             </Button>
           </Box>
       }
+      <AlertDialog
+        isOpen={isSubmitModalOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onSubmitModalClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Add Crush - {selectedUser.name}
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onSubmitModalClose}>
+                Cancel
+              </Button>
+              <Button colorScheme='red' onClick={(e) => {
+                onSubmitModalClose();
+                dispatch(createFollowing({ followedName: selectedUser.name, followedNetId: selectedUser.netid, followerNetId: netid, followerUserId: id }))
+                  .then((res) => {
+                    if (res.payload) {
+                      setIsAlertSuccess(true);
+                    } else {
+                      setIsAlertSuccess(false);
+                    }
+                    onAlertOpen();
+                  });
+              }} ml={3}>
+                Confirm Submit
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Box>
   );
 }
+
+// onClick={(e) => dispatch(createFollowing({ followedName: selectedUser.name, followedNetId: selectedUser.netid, followerNetId: netid, followerUserId: id }))}

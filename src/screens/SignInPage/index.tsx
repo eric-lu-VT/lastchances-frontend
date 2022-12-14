@@ -28,6 +28,8 @@ function SignInPage() {
             <Button
               size='lg'
               onClick={() => window.open(`${SERVER_URL}auth/cas-signin`, '_self')}
+              backgroundColor='#00693e'
+              color='white'
             >
               Enter
             </Button>

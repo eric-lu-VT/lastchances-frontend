@@ -51,7 +51,6 @@ export const createFollowing = createAsyncThunk(
         return response.data;
       })
       .catch((error) => {
-        alert('Error when creating following: ' + error.response.data.errors[0]);
         return false;
       });
   }
@@ -93,7 +92,6 @@ export const followingSlice = createSlice({
       const following: IFollowing = action.payload as IFollowing;
       if(following) {
         state.crushes.push(following);
-        alert('Created following for: ' + following.followedName + ', netid =' + following.followedNetId + '>');
       }
     });
     builder.addCase(getFollowings.fulfilled, (state, action) => {
